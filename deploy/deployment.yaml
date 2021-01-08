@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-1
+  labels:
+    app: user-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-1
+  template:
+    metadata:
+      labels:
+        app: user-1
+    spec:
+      containers:
+      - name: userapi
+        image: dockertanj/userapi
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /userhealth
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 15
