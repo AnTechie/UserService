@@ -5,7 +5,7 @@ metadata:
   labels:
     app: user-1
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: user-1
@@ -17,11 +17,24 @@ spec:
       containers:
       - name: userapi
         image: dockertanj/userapi
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /userhealth
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 15
+        env:
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: envconfig
+              key: POSTGRES_USERNAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: envconfig
+              key: POSTGRES_PASSWORD  
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: envconfig
+              key: POSTGRES_HOST  
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: envconfig
+              key: POSTGRES_DB                
