@@ -29,7 +29,7 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
     origin: config.url,
   }));
 
-  app.use('/api/v0/', IndexRouter);
+  app.use('/', IndexRouter);
 
   app.get( '/userhealth', async ( req, res ) => {
     res.send( 'Hello good Morning User!' );
